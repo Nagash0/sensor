@@ -39,7 +39,9 @@ if "dados" not in st.session_state:
     }
 
 if "historico" not in st.session_state:
-    st.session_state.historico = pd.DataFrame(columns=["Tempo", "Temperatura", "Carga Móvel", "Carga Distribuída", "Reação de Apoio"])
+    st.session_state.historico = pd.DataFrame(
+        columns=["Tempo", "Temperatura", "Carga Móvel", "Carga Distribuída", "Reação de Apoio"]
+    )
 
 # --- Função de atualização ---
 def atualizar_valores():
@@ -68,7 +70,7 @@ while True:
         st.session_state.historico = st.session_state.historico.iloc[-50:]
 
     with placeholder.container():
-        st.subheader(" Leituras Atuais")
+        st.subheader("Leituras Atuais")
         cols = st.columns(4)
         alerta_geral = False
 
@@ -86,23 +88,22 @@ while True:
                 status = f"✅ Normal ({valor})"
 
             cols[i].markdown(f"### {sensor}")
-            cols[i].progress(max(0.0, min((valor - lim_min) / (lim_max - lim_min), 1.0)))
+            progresso = max(0.0, min((valor - lim_min) / (lim_max - lim_min), 1.0))
+            cols[i].progress(progresso)
             cols[i].write(f"**Status:** {status}")
             cols[i].write(f"**Limites:** {lim_min} - {lim_max}")
 
         if alerta_geral:
-        st.error("⚠️ ALERTA: Um ou mais sensores estão fora dos limites definidos!")
-    # Reproduz som automaticamente, sem mostrar player
-        st.markdown(
-        """
-        <audio autoplay style="display:none">
-            <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
-        </audio>
-        """,
-        unsafe_allow_html=True
-    )
-
-
+            st.error("⚠️ ALERTA: Um ou mais sensores estão fora dos limites definidos!")
+            # Som automático, sem exibir player
+            st.markdown(
+                """
+                <audio autoplay style="display:none">
+                    <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+                </audio>
+                """,
+                unsafe_allow_html=True
+            )
 
         # --- Gráficos ---
         st.subheader("📊 Histórico dos Sensores")
