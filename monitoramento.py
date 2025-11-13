@@ -86,7 +86,7 @@ while True:
                 status = f"✅ Normal ({valor})"
 
             cols[i].markdown(f"### {sensor}")
-            cols[i].progress(min((valor - lim_min) / (lim_max - lim_min), 1.0))
+            cols[i].progress(max(0.0, min((valor - lim_min) / (lim_max - lim_min), 1.0)))
             cols[i].write(f"**Status:** {status}")
             cols[i].write(f"**Limites:** {lim_min} - {lim_max}")
 
