@@ -44,7 +44,7 @@ if "historico" not in st.session_state:
 # --- Função de atualização ---
 def atualizar_valores():
     for sensor in st.session_state.dados:
-        variacao = np.random.uniform(-5, 5)
+        variacao = np.random.uniform(-10, 10)
         st.session_state.dados[sensor] = round(st.session_state.dados[sensor] + variacao, 2)
 
 # --- Área principal ---
@@ -77,15 +77,12 @@ while True:
             lim_max = limites[sensor]["max"]
 
             if valor < lim_min:
-                cor = "orange"
                 status = f"⚠️ Abaixo ({valor})"
                 alerta_geral = True
             elif valor > lim_max:
-                cor = "red"
                 status = f"🚨 Acima ({valor})"
                 alerta_geral = True
             else:
-                cor = "green"
                 status = f"✅ Normal ({valor})"
 
             cols[i].markdown(f"### {sensor}")
