@@ -92,7 +92,7 @@ while True:
 
         if alerta_geral:
         st.error("⚠️ ALERTA: Um ou mais sensores estão fora dos limites definidos!")
-        # Reproduz som automaticamente, sem mostrar player
+    # Reproduz som automaticamente, sem mostrar player
         st.markdown(
         """
         <audio autoplay style="display:none">
@@ -101,6 +101,7 @@ while True:
         """,
         unsafe_allow_html=True
     )
+
 
 
         # --- Gráficos ---
