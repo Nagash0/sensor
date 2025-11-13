@@ -12,39 +12,39 @@ st.title("📊 Monitoramento de Sensores com Gráficos e Alertas")
 st.sidebar.header("⚙️ Limites de Operação por Sensor")
 limites = {
     "Temperatura": {
-        "min": st.sidebar.number_input("Temperatura - mínimo", value=25.0),
-        "max": st.sidebar.number_input("Temperatura - máximo", value=80.0)
+        "min": st.sidebar.number_input("Temperatura - mínimo (°C)", value=15.0),
+        "max": st.sidebar.number_input("Temperatura - máximo (°C)", value=45.0)
     },
-    "Carga": {
-        "min": st.sidebar.number_input("Carga - mínimo", value=30.0),
-        "max": st.sidebar.number_input("Carga - máximo", value=70.0)
+    "Carga Móvel": {
+        "min": st.sidebar.number_input("Carga Móvel - mínimo (kN)", value=0.0),
+        "max": st.sidebar.number_input("Carga Móvel - máximo (kN)", value=450.0)
     },
-    "Tensão": {
-        "min": st.sidebar.number_input("Tensão - mínimo", value=200.0),
-        "max": st.sidebar.number_input("Tensão - máximo", value=240.0)
+    "Carga Distribuída": {
+        "min": st.sidebar.number_input("Carga Distribuída - mínimo (kN/m²)", value=0.0),
+        "max": st.sidebar.number_input("Carga Distribuída - máximo (kN/m²)", value=5.0)
     },
-    "Corrosão": {
-        "min": st.sidebar.number_input("Corrosão - mínimo", value=5.0),
-        "max": st.sidebar.number_input("Corrosão - máximo", value=40.0)
+    "Reação de Apoio": {
+        "min": st.sidebar.number_input("Reação de Apoio - mínimo (kN)", value=315.0),
+        "max": st.sidebar.number_input("Reação de Apoio - máximo (kN)", value=365.0)
     },
 }
 
 # --- Inicialização ---
 if "dados" not in st.session_state:
     st.session_state.dados = {
-        "Temperatura": np.random.uniform(40, 50),
-        "Carga": np.random.uniform(45, 55),
-        "Tensão": np.random.uniform(210, 225),
-        "Corrosão": np.random.uniform(15, 25)
+        "Temperatura": np.random.uniform(20, 40),
+        "Carga Móvel": np.random.uniform(100, 400),
+        "Carga Distribuída": np.random.uniform(1, 4),
+        "Reação de Apoio": np.random.uniform(320, 360)
     }
 
 if "historico" not in st.session_state:
-    st.session_state.historico = pd.DataFrame(columns=["Tempo", "Temperatura", "Carga", "Tensão", "Corrosão"])
+    st.session_state.historico = pd.DataFrame(columns=["Tempo", "Temperatura", "Carga Móvel", "Carga Distribuída", "Reação de Apoio"])
 
 # --- Função de atualização ---
 def atualizar_valores():
     for sensor in st.session_state.dados:
-        variacao = np.random.uniform(-2, 2)
+        variacao = np.random.uniform(-5, 5)
         st.session_state.dados[sensor] = round(st.session_state.dados[sensor] + variacao, 2)
 
 # --- Área principal ---
@@ -100,7 +100,7 @@ while True:
         # --- Gráficos ---
         st.subheader("📊 Histórico dos Sensores")
         fig, ax = plt.subplots(2, 2, figsize=(10, 6))
-        sensores = ["Temperatura", "Carga", "Tensão", "Corrosão"]
+        sensores = ["Temperatura", "Carga Móvel", "Carga Distribuída", "Reação de Apoio"]
 
         for i, sensor in enumerate(sensores):
             linha = i // 2
