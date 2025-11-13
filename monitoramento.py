@@ -91,8 +91,17 @@ while True:
             cols[i].write(f"**Limites:** {lim_min} - {lim_max}")
 
         if alerta_geral:
-            st.error("⚠️ ALERTA: Um ou mais sensores estão fora dos limites definidos!")
-            st.audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg")
+        st.error("⚠️ ALERTA: Um ou mais sensores estão fora dos limites definidos!")
+        # Reproduz som automaticamente, sem mostrar player
+        st.markdown(
+        """
+        <audio autoplay style="display:none">
+            <source src="https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg" type="audio/ogg">
+        </audio>
+        """,
+        unsafe_allow_html=True
+    )
+
 
         # --- Gráficos ---
         st.subheader("📊 Histórico dos Sensores")
